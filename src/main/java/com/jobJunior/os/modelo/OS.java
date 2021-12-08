@@ -28,11 +28,11 @@ public class OS {
 	private Integer prioridade;
 	private String observacoes;
 	private Integer status;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "tecnico_id")
 	private Tecnico tecnico;
