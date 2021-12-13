@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jobJunior.os.dtos.ClienteDTO;
 import com.jobJunior.os.modelo.Cliente;
 import com.jobJunior.os.repository.ClienteRepository;
 import com.jobJunior.os.services.exception.ObjectNotFoundException;
@@ -24,5 +25,9 @@ public class ClienteService {
 
 	public List<Cliente> findAll() {
 		return clienteRepository.findAll();
+	}
+
+	public Cliente create(ClienteDTO clienteDTO) {
+		return clienteRepository.save(new Cliente(null, clienteDTO.getNome(), clienteDTO.getCpf(), clienteDTO.getTelefone()));
 	}
 }
