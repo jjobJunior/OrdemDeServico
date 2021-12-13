@@ -1,5 +1,6 @@
 package com.jobJunior.os.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,11 @@ public class ClienteService {
 
 	public Cliente findById(Integer id) {
 		Optional<Cliente> obj = clienteRepository.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado, de Id: " + id + " Tipo: " + Cliente.class.getName()));
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado, de Id: " + id + " Tipo: " + Cliente.class.getName()));
+	}
+
+	public List<Cliente> findAll() {
+		return clienteRepository.findAll();
 	}
 }
