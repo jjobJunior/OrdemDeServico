@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.jobJunior.os.dtos.ClienteDTO;
 import com.jobJunior.os.modelo.Cliente;
 import com.jobJunior.os.repository.ClienteRepository;
+import com.jobJunior.os.services.exception.DataIntegratyViolationException;
 import com.jobJunior.os.services.exception.ObjectNotFoundException;
 
 @Service
@@ -28,6 +29,19 @@ public class ClienteService {
 	}
 
 	public Cliente create(ClienteDTO clienteDTO) {
-		return clienteRepository.save(new Cliente(null, clienteDTO.getNome(), clienteDTO.getCpf(), clienteDTO.getTelefone()));
+		if (findByCPF(clienteDTO) != null) {
+			throw new DataIntegratyViolationException("CPF ja cadastrado na base de dados");
+
+		}
+		return clienteRepository
+				.save(new Cliente(null, clienteDTO.getNome(), clienteDTO.getCpf(), clienteDTO.getTelefone()));
+	}
+
+	private Cliente findByCPF(ClienteDTO clienteDTO) {
+		Cliente cliente = clienteRepository.findByCPF(clienteDTO.getCpf());
+		if (cliente != null) {
+			return cliente;
+		}
+		return null;
 	}
 }

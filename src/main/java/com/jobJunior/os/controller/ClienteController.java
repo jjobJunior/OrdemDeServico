@@ -41,12 +41,12 @@ public class ClienteController {
 		}
 		return ResponseEntity.ok().body(listDtos);
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<ClienteDTO> create(@RequestBody ClienteDTO clienteDTO){
+	public ResponseEntity<ClienteDTO> create(@RequestBody ClienteDTO clienteDTO) {
 		Cliente novoCliente = clienteService.create(clienteDTO);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(novoCliente.getId()).toUri();
-		
+
 		return ResponseEntity.created(uri).build();
 	}
 }
