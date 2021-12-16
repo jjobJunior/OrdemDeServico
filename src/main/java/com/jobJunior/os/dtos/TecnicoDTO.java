@@ -2,6 +2,8 @@ package com.jobJunior.os.dtos;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotEmpty;
+
 import org.hibernate.validator.constraints.br.CPF;
 
 import com.jobJunior.os.modelo.Tecnico;
@@ -10,10 +12,16 @@ public class TecnicoDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
+	
+	@NotEmpty(message = "O campo NOME é Obrgatorio!")
 	private String nome;
 
 	@CPF
+	@NotEmpty(message = "O campo CPF é Obrgatorio!")
 	private String cpf;
+	
+	
+	@NotEmpty(message = "O campo TELEFONE é Obrgatorio!")
 	private String telefone;
 
 	public TecnicoDTO() {
