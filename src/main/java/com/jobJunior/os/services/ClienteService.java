@@ -59,4 +59,14 @@ public class ClienteService {
 		}
 		return null;
 	}
+
+	public void delete(Integer id) {
+		Cliente cliente = findById(id);
+		
+		if (cliente.getListOs().size() != 0) {
+			throw new DataIntegratyViolationException(
+					"O tecnico não pode ser excluido, pois esta associado a Ordem de Sserviço!");
+		}
+		clienteRepository.deleteById(id);
+	}
 }

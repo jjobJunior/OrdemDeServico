@@ -59,4 +59,14 @@ public class TecnicoService {
 		return null;
 	}
 
+	public void delete(Integer id) {
+		Tecnico tecnico = findById(id);
+
+		if (tecnico.getListOs().size() != 0) {
+			throw new DataIntegratyViolationException(
+					"O tecnico não pode ser excluido, pois esta associado a Ordem de Sserviço!");
+		}
+		tecnicoRepository.deleteById(id);
+	}
+
 }
