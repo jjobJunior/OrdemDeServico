@@ -16,8 +16,8 @@ public class ClienteDTO implements Serializable {
 	@NotEmpty(message = "O campo NOME é Obrgatorio!")
 	private String nome;
 
-	//@NotEmpty(message = "O campo CPF é Obrgatorio!")
 	@CPF
+	@NotEmpty(message = "O campo CPF é Obrgatorio!")
 	private String cpf;
 
 	@NotEmpty(message = "O campo TELEFONE é Obrgatorio!")

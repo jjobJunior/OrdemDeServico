@@ -3,6 +3,8 @@ package com.jobJunior.os.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,9 +32,23 @@ public class TecnicoService {
 
 	public Tecnico create(TecnicoDTO tecnicoDTO) {
 		if (findByCPF(tecnicoDTO) != null) {
-				throw new DataIntegratyViolationException("CPF ja cadastrado na base de dados");
+			throw new DataIntegratyViolationException("CPF ja cadastrado na base de dados");
 		}
-		return tecnicoRepository.save(new Tecnico(null, tecnicoDTO.getNome(), tecnicoDTO.getCpf(), tecnicoDTO.getTelefone()));
+		return tecnicoRepository
+				.save(new Tecnico(null, tecnicoDTO.getNome(), tecnicoDTO.getCpf(), tecnicoDTO.getTelefone()));
+	}
+
+	public Tecnico update(Integer id, @Valid TecnicoDTO tecnicoDTO) {
+		Tecnico tecAtual = findById(id);
+
+		if (findByCPF(tecnicoDTO) != null && findByCPF(tecnicoDTO).getId() != id) {
+			throw new DataIntegratyViolationException("O Id não confere com o CPF!");
+		}
+		tecAtual.setNome(tecnicoDTO.getNome());
+		tecAtual.setCpf(tecnicoDTO.getCpf());
+		tecAtual.setTelefone(tecnicoDTO.getTelefone());
+
+		return tecnicoRepository.save(tecAtual);
 	}
 
 	private Tecnico findByCPF(TecnicoDTO tecnicoDTO) {
@@ -42,4 +58,5 @@ public class TecnicoService {
 		}
 		return null;
 	}
+
 }

@@ -3,6 +3,8 @@ package com.jobJunior.os.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +37,19 @@ public class ClienteService {
 		}
 		return clienteRepository
 				.save(new Cliente(null, clienteDTO.getNome(), clienteDTO.getCpf(), clienteDTO.getTelefone()));
+	}
+
+	public Cliente update(Integer id, @Valid ClienteDTO clienteDTO) {
+		Cliente cliAtual = findById(id);
+
+		if (findByCPF(clienteDTO) != null && findByCPF(clienteDTO).getId() != id) {
+			throw new DataIntegratyViolationException("O Id não confere com o CPF!");
+		}
+		cliAtual.setNome(clienteDTO.getNome());
+		cliAtual.setCpf(clienteDTO.getCpf());
+		cliAtual.setTelefone(clienteDTO.getTelefone());
+
+		return clienteRepository.save(cliAtual);
 	}
 
 	private Cliente findByCPF(ClienteDTO clienteDTO) {
