@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import com.jobJunior.os.dtos.ClienteDTO;
 import com.jobJunior.os.modelo.Cliente;
+import com.jobJunior.os.modelo.Pessoa;
 import com.jobJunior.os.repository.ClienteRepository;
+import com.jobJunior.os.repository.PessoaRepository;
 import com.jobJunior.os.services.exception.DataIntegratyViolationException;
 import com.jobJunior.os.services.exception.ObjectNotFoundException;
 
@@ -19,6 +21,9 @@ public class ClienteService {
 
 	@Autowired
 	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private PessoaRepository pessoaRepository;
 
 	public Cliente findById(Integer id) {
 		Optional<Cliente> obj = clienteRepository.findById(id);
@@ -52,14 +57,6 @@ public class ClienteService {
 		return clienteRepository.save(cliAtual);
 	}
 
-	private Cliente findByCPF(ClienteDTO clienteDTO) {
-		Cliente cliente = clienteRepository.findByCPF(clienteDTO.getCpf());
-		if (cliente != null) {
-			return cliente;
-		}
-		return null;
-	}
-
 	public void delete(Integer id) {
 		Cliente cliente = findById(id);
 		
@@ -68,5 +65,13 @@ public class ClienteService {
 					"O tecnico não pode ser excluido, pois esta associado a Ordem de Sserviço!");
 		}
 		clienteRepository.deleteById(id);
+	}
+
+	private Pessoa findByCPF(ClienteDTO clienteDTO) {
+		Pessoa pessoa = pessoaRepository.findByCPF(clienteDTO.getCpf());
+		if (pessoa != null) {
+			return pessoa;
+		}
+		return null;
 	}
 }

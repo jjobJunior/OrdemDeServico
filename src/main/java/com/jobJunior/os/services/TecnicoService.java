@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jobJunior.os.dtos.TecnicoDTO;
+import com.jobJunior.os.modelo.Pessoa;
 import com.jobJunior.os.modelo.Tecnico;
+import com.jobJunior.os.repository.PessoaRepository;
 import com.jobJunior.os.repository.TecnicoRepository;
 import com.jobJunior.os.services.exception.DataIntegratyViolationException;
 import com.jobJunior.os.services.exception.ObjectNotFoundException;
@@ -19,6 +21,9 @@ public class TecnicoService {
 
 	@Autowired
 	private TecnicoRepository tecnicoRepository;
+
+	@Autowired
+	private PessoaRepository pessoaRepository;
 
 	public Tecnico findById(Integer id) {
 		Optional<Tecnico> obj = tecnicoRepository.findById(id);
@@ -51,14 +56,6 @@ public class TecnicoService {
 		return tecnicoRepository.save(tecAtual);
 	}
 
-	private Tecnico findByCPF(TecnicoDTO tecnicoDTO) {
-		Tecnico tecnico = tecnicoRepository.findByCPF(tecnicoDTO.getCpf());
-		if (tecnico != null) {
-			return tecnico;
-		}
-		return null;
-	}
-
 	public void delete(Integer id) {
 		Tecnico tecnico = findById(id);
 
@@ -67,6 +64,14 @@ public class TecnicoService {
 					"O tecnico não pode ser excluido, pois esta associado a Ordem de Sserviço!");
 		}
 		tecnicoRepository.deleteById(id);
+	}
+
+	private Pessoa findByCPF(TecnicoDTO tecnicoDTO) {
+		Pessoa pessoa = pessoaRepository.findByCPF(tecnicoDTO.getCpf());
+		if (pessoa != null) {
+			return pessoa;
+		}
+		return null;
 	}
 
 }
