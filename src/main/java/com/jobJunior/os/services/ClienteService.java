@@ -62,7 +62,7 @@ public class ClienteService {
 		
 		if (cliente.getListOs().size() != 0) {
 			throw new DataIntegratyViolationException(
-					"O tecnico não pode ser excluido, pois esta associado a Ordem de Sserviço!");
+					"O Cliente não pode ser excluido, pois esta associado a Ordem de Sserviço!");
 		}
 		clienteRepository.deleteById(id);
 	}

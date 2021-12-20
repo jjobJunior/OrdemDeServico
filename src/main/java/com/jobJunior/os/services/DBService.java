@@ -30,12 +30,13 @@ public class DBService {
 		Cliente c1 = new Cliente(null, "Isadora", "902.207.590-73", "(48) 55555-4411");
 		Cliente c2 = new Cliente(null, "Ana Julia", "570.494.520-17", "(12) 12121-4411");
 		OS os1 = new OS(null, Prioridade.ALTA, "Teste de Create OS", Status.ANDAMENTO, c1, t1);
+		OS os2 = new OS(null, Prioridade.ALTA, "Segundo Teste de Create OS", Status.ANDAMENTO, c2, t1);
 
 		t1.getListOs().add(os1);
 		c1.getListOs().add(os1);
 
 		tecnicoRepository.saveAll(Arrays.asList(t1, t2));
-		clienteRepository.saveAll(Arrays.asList(c1,c2));
-		osRepository.saveAll(Arrays.asList(os1));
+		clienteRepository.saveAll(Arrays.asList(c1, c2));
+		osRepository.saveAll(Arrays.asList(os1, os2));
 	}
 }
