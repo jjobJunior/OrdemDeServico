@@ -24,9 +24,7 @@ public class OSDTO implements Serializable {
 	@NotEmpty(message = "O preenchimento campo observações é obrigatorio")
 	private String observacoes;
 	private Integer status;
-	@NotEmpty(message = "O preenchimento campo Cliente é obrigatorio")
 	private Integer cliente;
-	@NotEmpty(message = "O preenchimento campo Tecnico é obrigatorio")
 	private Integer tecnico;
 
 	public OSDTO() {
